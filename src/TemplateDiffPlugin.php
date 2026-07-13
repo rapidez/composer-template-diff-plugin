@@ -38,10 +38,6 @@ class TemplateDiffPlugin implements PluginInterface, EventSubscriberInterface
         $composer = $event->getComposer();
         $vendorDir = $composer->getConfig()->get('vendor-dir');
 
-        if (!is_string($vendorDir)) {
-            return;
-        }
-
         $projectRoot = dirname($vendorDir);
 
         try {
@@ -215,10 +211,9 @@ class TemplateDiffPlugin implements PluginInterface, EventSubscriberInterface
                         continue;
                     }
 
-                    $relativePath = $this->relativePath($overrideRoot, $overridePath);
-                    $sourceFile = rtrim($resolvedSourceRoot, '/').'/'.$relativePath;
+                    $sourceFile = $this->resolveSourceFile($overrideRoot, $overridePath, $resolvedSourceRoot);
 
-                    if (!is_file($sourceFile)) {
+                    if ($sourceFile === null) {
                         $missingSource++;
                         continue;
                     }
@@ -266,5 +261,35 @@ class TemplateDiffPlugin implements PluginInterface, EventSubscriberInterface
         $normalizedPath = str_replace('\\', '/', $path);
 
         return ltrim(substr($normalizedPath, strlen($normalizedRoot)), '/');
+    }
+
+    private function resolveSourceFile(string $overrideRoot, string $overridePath, string $sourceRoot): ?string
+    {
+        if (!$this->isWithinRoot($overrideRoot, $overridePath)) {
+            return null;
+        }
+
+        $relativePath = $this->relativePath($overrideRoot, $overridePath);
+
+        if ($relativePath === '') {
+            return null;
+        }
+
+        $sourceFile = rtrim($sourceRoot, '/').'/'.$relativePath;
+
+        if (!is_file($sourceFile)) {
+            return null;
+        }
+
+        return $sourceFile;
+    }
+
+    private function isWithinRoot(string $root, string $path): bool
+    {
+        $normalizedRoot = rtrim(str_replace('\\', '/', $root), '/');
+        $normalizedPath = str_replace('\\', '/', $path);
+
+        return $normalizedPath === $normalizedRoot
+            || str_starts_with($normalizedPath, $normalizedRoot.'/');
     }
 }
