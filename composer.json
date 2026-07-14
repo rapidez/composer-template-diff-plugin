@@ -1,0 +1,28 @@
+{
+    "name": "rapidez/composer-template-diff-plugin",
+    "description": "Composer plugin for template override hash synchronization",
+    "type": "composer-plugin",
+    "license": "GPL-3.0-or-later",
+    "require": {
+        "composer-plugin-api": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rapidez\\ComposerTemplateDiffPlugin\\": "src/"
+        }
+    },
+    "extra": {
+        "class": "Rapidez\\ComposerTemplateDiffPlugin\\TemplateDiffPlugin",
+        "plugin-optional": true
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.2",
+        "composer/composer": "^2.0",
+        "phpstan/extension-installer": "^1.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    }
+}

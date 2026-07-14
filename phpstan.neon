@@ -1,0 +1,5 @@
+parameters:
+    level: 10
+    editorUrlTitle: '%%relFile%%:%%line%%'
+    editorUrl: '%%relFile%%:%%line%%'
+    tipsOfTheDay: false
