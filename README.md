@@ -9,7 +9,19 @@ It will use the `views` publishables for this so make sure your views are publis
 
 ## Installation
 
-`composer require (--dev) rapidez/composer-template-diff-plugin`
+```shell
+composer require (--dev) rapidez/composer-template-diff-plugin
+```
+
+## Usage
+
+You can also run manually update the hashes with:
+
+```shell
+composer update-vendor-hashes`
+```
+
+This will also automatically run after updating any packages.
 
 ## License
 
