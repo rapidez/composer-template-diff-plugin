@@ -23,6 +23,18 @@ composer update-vendor-hashes`
 
 This will also automatically run after updating any packages.
 
+### Configure automatic plugin execution
+
+Automatic execution (after `composer update`) can be disabled explicitly with:
+
+```shell
+RAPIDEZ_TEMPLATE_DIFF_DISABLED=1
+```
+
+When `RAPIDEZ_TEMPLATE_DIFF_DISABLED` is not set, automatic execution is enabled only when `APP_ENV` is `local`
+
+Manual execution with `composer update-vendor-hashes` always runs and does not use these automatic plugin toggle rules.
+
 ## License
 
 GNU General Public License v3. Please see [License File](LICENSE) for more information.
